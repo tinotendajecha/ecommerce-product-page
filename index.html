@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.google.com/specimen/Kumbh+Sans"
+    />
+
+    <link rel="stylesheet" href="./public/style.css" />
+
+    <title>Frontend Mentor | E-commerce product page</title>
+
+    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+    <style>
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+      }
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
+      /*CSS Custom properties*/
+      :root {
+        /*Primary colors*/
+        --orange: hsl(26, 100%, 55%);
+        --pale-orange: hsl(25, 100%, 94%);
+
+        /*Neutral colors*/
+        --very-dark-blue: hsl(220, 13%, 13%);
+        --dark-grayish-blue: hsl(219, 9%, 45%);
+        --grayish-blue: hsl(220, 14%, 75%);
+        --light-grayish-blue: hsl(223, 64%, 98%);
+        --white: hsl(0, 0%, 100%);
+        --black: hsl(0, 0%, 0%); /*75% for lighbox background*/
+
+        /*Typography*/
+        --font-size: 28px;
+        --small-font-size: 16px;
+        --font-weight1: 400;
+        --font-weight2: 700;
+
+        /*font family*/
+        --font-family: "Kumbh Sans";
+      }
+      /*CSS reset*/
+      *,
+      ::before,
+      ::after {
+        padding: 0px;
+        margin: 0px;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-family);
+        position: relative;
+      }
+
+      /*removes extra space between sections*/
+      section {
+        margin-top: -1%;
+      }
+      li {
+        list-style-type: none;
+      }
+
+      /*Below this section is where i hide different elements*/
+
+      main .menu {
+        display: none;
+        position: absolute;
+        background-color: white;
+        width: 35vw;
+        height: calc(100vh + 320px);
+        z-index: 1;
+        padding: 20px;
+      }
+      main .close-menu {
+        margin-bottom: 40px;
+      }
+
+      main .mobile-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+      }
+
+      main .mobile-menu li {
+        font-size: 18px;
+        font-weight: 650;
+      }
+
+      .screen-sm-hidden {
+        display: none;
+      }
+
+      /*Styling elements under the nav bar*/
+      nav {
+        display: flex;
+        padding: 16px;
+        justify-content: space-between;
+      }
+
+      nav .title-container {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      nav .cart-container {
+        align-items: center;
+        display: flex;
+        gap: 20px;
+      }
+      nav .cart-container img {
+        width: 25px;
+        height: 25px;
+        align-items: center;
+      }
+
+      nav .logo {
+        font-size: var(--font-size);
+        font-family: var(--font-family);
+      }
+
+      /*Stying the element below the first section*/
+
+      section .images-container {
+        position: relative;
+      }
+
+      section .slide img {
+        width: 100%;
+      }
+
+      section .next-btn,
+      .previous-btn {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        background-color: var(--white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .next-btn {
+        top: 45%;
+        right: 3%;
+      }
+      .previous-btn {
+        top: 45%;
+        left: 3%;
+      }
+
+      /*Styling elements under the second section*/
+
+      section .sneaker-info {
+        padding: 10px 20px 20px 20px;
+      }
+
+      section .title {
+        color: var(--orange);
+        letter-spacing: 2px;
+        font-size: 14px;
+        padding: 10px 0 10px;
+      }
+
+      section .sneaker-name {
+        width: 75vw;
+        font-size: 28px;
+        margin-bottom: 15px;
+      }
+
+      section p {
+        color: var(--grayish-blue);
+        margin-bottom: 15px;
+      }
+
+      section .price-container {
+        margin-left: 10px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+      }
+
+      section .discount-price {
+        display: flex;
+        align-items: center;
+      }
+
+      section .discount-price h2 {
+        margin-right: 15px;
+      }
+
+      section .discount-price span {
+        background-color: var(--pale-orange);
+        color: orange;
+        padding: 3px 8px 3px 8px;
+        border-radius: 4px;
+      }
+
+      section .original-price {
+        display: flex;
+        align-items: center;
+        font-weight: var(--font-weight2);
+        color: var(--grayish-blue);
+        text-decoration: line-through;
+      }
+      .btn-container {
+        display: flex;
+        flex-direction: column;
+      }
+      .increment-decrement-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 20px 15px 20px;
+        margin-bottom: 20px;
+        background-color: var(--light-grayish-blue);
+        border-radius: 5px;
+      }
+      .count-container h6 {
+        font-size: 16px;
+      }
+      .white-cart {
+        background-color: var(--orange);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        border-radius: 5px;
+        gap: 15px;
+      }
+      .add-to-cart {
+        font-weight: var(--font-weight2);
+      }
+
+      @media (min-width: 962px) {
+        .screen-sm-hidden {
+          display: block;
+        }
+        .screen-lg-hidden {
+          display: none;
+        }
+
+        body {
+          display: flex;
+          flex-direction: column;
+        }
+        li {
+          list-style-type: none;
+          color: var(--grayish-blue);
+        }
+        main .nav-wrapper {
+          display: flex;
+          justify-content: center;
+        }
+        nav {
+          width: 70vw;
+          margin-bottom: 15px;
+        }
+
+        main .cart-container img {
+          width: 60px;
+          height: 60px;
+          margin-left: 20px;
+        }
+
+        nav .logo {
+          margin-right: 30px;
+        }
+
+        nav .list-items {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 15px;
+          font-size: 15px;
+        }
+
+        main .hr {
+          margin-top: 0;
+          margin-bottom: 100px;
+          display: flex;
+          justify-content: center;
+        }
+
+        main .horizontal-line {
+          width: 65vw;
+          border-bottom: 1px solid;
+          border-color: var(--grayish-blue);
+        }
+
+        main .sections {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 70vh;
+          gap: 100px;
+        }
+
+        section .images-container {
+          width: 40vw;
+        }
+
+        .next-btn {
+          top: 40%;
+          right: 3%;
+        }
+        .previous-btn {
+          top: 40%;
+          left: 3%;
+        }
+
+        section .slide img {
+          border-radius: 20px;
+        }
+
+        section .thumbnail-images {
+          display: flex;
+          width: 100%;
+          gap: 20px;
+        }
+
+        section .thumbnail-img img {
+          width: 100%;
+          border-radius: 10px;
+        }
+
+        section .slide {
+          margin-bottom: 20px;
+        }
+
+        section .sneaker-info {
+          width: 40vw;
+        }
+        section .title {
+          font-size: 20px;
+        }
+
+        section .sneaker-name {
+          width: 100%;
+          font-size: 40px;
+        }
+
+        section .price-container {
+          display: block;
+        }
+        .discount-price h2 {
+          font-size: 28px;
+        }
+        .original-price {
+          font-size: 14px;
+        }
+
+        .btn-container {
+          flex-direction: row;
+          gap: 20px;
+        }
+        .increment-decrement-container {
+          width: 35%;
+        }
+
+        .add-to-cart-container {
+          width: 60%;
+        }
+      }
+
+      @media (min-width: 1060px) {
+        section .images-container {
+          width: 35vw;
+        }
+
+        section .sneaker-info {
+          width: 35vw;
+        }
+      }
+
+      @media (min-width: 1300px) {
+        section .images-container {
+          width: 30vw;
+        }
+
+        section .sneaker-info {
+          width: 30vw;
+        }
+      }
+
+      @media (max-width: 300px) {
+        main .mobile-menu li {
+          font-size: 13px;
+          font-weight: 650;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="menu screen-lg-hidden" id="show-menu">
+        <div class="close-menu" id="close-menu">
+          <svg width="14" height="15" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="m11.596.782 2.122 2.122L9.12 7.499l4.597 4.597-2.122 2.122L7 9.62l-4.595 4.597-2.122-2.122L4.878 7.5.282 2.904 2.404.782l4.595 4.596L11.596.782Z"
+              fill="#69707D"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </div>
+        <ul class="list-items mobile-menu">
+          <li>Collections</li>
+          <li>Men</li>
+          <li>Women</li>
+          <li>About</li>
+          <li>Contact</li>
+        </ul>
+      </div>
+
+      <header class="nav-wrapper">
+        <nav class="nav-bar">
+          <div class="title-container">
+            <svg
+              class="screen-lg-hidden"
+              id="open-menu"
+              width="16"
+              height="15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M16 12v3H0v-3h16Zm0-6v3H0V6h16Zm0-6v3H0V0h16Z"
+                fill="#69707D"
+                fill-rule="evenodd"
+              />
+            </svg>
+
+            <h4 class="logo">Sneakers</h4>
+
+            <div class="screen-sm-hidden list-items-wrapper">
+              <ul class="list-items desktop-menu">
+                <li>Collections</li>
+                <li>Men</li>
+                <li>Women</li>
+                <li>About</li>
+                <li>Contact</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="cart-container">
+            <svg width="22" height="20" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20.925 3.641H3.863L3.61.816A.896.896 0 0 0 2.717 0H.897a.896.896 0 1 0 0 1.792h1l1.031 11.483c.073.828.52 1.726 1.291 2.336C2.83 17.385 4.099 20 6.359 20c1.875 0 3.197-1.87 2.554-3.642h4.905c-.642 1.77.677 3.642 2.555 3.642a2.72 2.72 0 0 0 2.717-2.717 2.72 2.72 0 0 0-2.717-2.717H6.365c-.681 0-1.274-.41-1.53-1.009l14.321-.842a.896.896 0 0 0 .817-.677l1.821-7.283a.897.897 0 0 0-.87-1.114ZM6.358 18.208a.926.926 0 0 1 0-1.85.926.926 0 0 1 0 1.85Zm10.015 0a.926.926 0 0 1 0-1.85.926.926 0 0 1 0 1.85Zm2.021-7.243-13.8.81-.57-6.341h15.753l-1.383 5.53Z"
+                fill="#69707D"
+                fill-rule="nonzero"
+              />
+            </svg>
+
+            <img src="./images/image-avatar.png" alt="" />
+          </div>
+        </nav>
+      </header>
+
+      <div class="hr">
+        <div class="horizontal-line screen-sm-hidden"></div>
+      </div>
+
+      <div class="sections">
+        <section class="first-section">
+          <div class="images-container">
+            <div class="slide">
+              <img src="./images/image-product-1.jpg" alt="" />
+            </div>
+            <div class="slide">
+              <img src="./images/image-product-2.jpg" alt="" />
+            </div>
+            <div class="slide">
+              <img src="./images/image-product-3.jpg" alt="" />
+            </div>
+            <div class="slide">
+              <img src="./images/image-product-4.jpg" alt="" />
+            </div>
+
+            <div class="screen-sm-hidden thumbnail-images">
+              <div class="thumbnail-img">
+                <img src="./images/image-product-1-thumbnail.jpg" alt="" />
+              </div>
+              <div class="thumbnail-img">
+                <img src="./images/image-product-2-thumbnail.jpg" alt="" />
+              </div>
+              <div class="thumbnail-img">
+                <img src="./images/image-product-3-thumbnail.jpg" alt="" />
+              </div>
+              <div class="thumbnail-img">
+                <img src="./images/image-product-4-thumbnail.jpg" alt="" />
+              </div>
+            </div>
+
+            <div class="next-btn" id="next-btn">
+              <svg width="13" height="18" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="m2 1 8 8-8 8"
+                  stroke="#1D2026"
+                  stroke-width="3"
+                  fill="none"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+
+            <div class="previous-btn" id="previous-btn">
+              <svg width="12" height="18" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M11 1 3 9l8 8"
+                  stroke="#1D2026"
+                  stroke-width="3"
+                  fill="none"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <section class="second-section">
+          <div class="sneaker-info">
+            <h4 class="title">Sneaker Company</h4>
+
+            <h2 class="sneaker-name">Fall Limited Edition Sneakers</h2>
+
+            <p>
+              These low-profile sneakers are your perfect casual wear companion.
+              Featuring a durable rubber outer sole, they’ll withstand
+              everything the weather can offer.
+            </p>
+
+            <div class="price-container">
+              <div class="discount-price">
+                <h2>$125.00</h2>
+                <span>50%</span>
+              </div>
+
+              <div class="original-price">
+                <span>$250.00</span>
+              </div>
+            </div>
+
+            <div class="btn-container">
+              <div class="increment-decrement-container">
+                <div class="btn minus-btn">
+                  <svg
+                    width="12"
+                    height="4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <defs>
+                      <path
+                        d="M11.357 3.332A.641.641 0 0 0 12 2.69V.643A.641.641 0 0 0 11.357 0H.643A.641.641 0 0 0 0 .643v2.046c0 .357.287.643.643.643h10.714Z"
+                        id="a"
+                      />
+                    </defs>
+                    <use fill="#FF7E1B" fill-rule="nonzero" xlink:href="#a" />
+                  </svg>
+                </div>
+
+                <div class="count-container">
+                  <h6 class="count" id="count">0</h6>
+                </div>
+
+                <div class="btn plus-btn">
+                  <svg
+                    width="12"
+                    height="12"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <defs>
+                      <path
+                        d="M12 7.023V4.977a.641.641 0 0 0-.643-.643h-3.69V.643A.641.641 0 0 0 7.022 0H4.977a.641.641 0 0 0-.643.643v3.69H.643A.641.641 0 0 0 0 4.978v2.046c0 .356.287.643.643.643h3.69v3.691c0 .356.288.643.644.643h2.046a.641.641 0 0 0 .643-.643v-3.69h3.691A.641.641 0 0 0 12 7.022Z"
+                        id="b"
+                      />
+                    </defs>
+                    <use fill="#FF7E1B" fill-rule="nonzero" xlink:href="#b" />
+                  </svg>
+                </div>
+              </div>
+
+              <div class="add-to-cart-container">
+                <div class="white-cart cart-container">
+                  <svg
+                    width="22"
+                    height="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M20.925 3.641H3.863L3.61.816A.896.896 0 0 0 2.717 0H.897a.896.896 0 1 0 0 1.792h1l1.031 11.483c.073.828.52 1.726 1.291 2.336C2.83 17.385 4.099 20 6.359 20c1.875 0 3.197-1.87 2.554-3.642h4.905c-.642 1.77.677 3.642 2.555 3.642a2.72 2.72 0 0 0 2.717-2.717 2.72 2.72 0 0 0-2.717-2.717H6.365c-.681 0-1.274-.41-1.53-1.009l14.321-.842a.896.896 0 0 0 .817-.677l1.821-7.283a.897.897 0 0 0-.87-1.114ZM6.358 18.208a.926.926 0 0 1 0-1.85.926.926 0 0 1 0 1.85Zm10.015 0a.926.926 0 0 1 0-1.85.926.926 0 0 1 0 1.85Zm2.021-7.243-13.8.81-.57-6.341h15.753l-1.383 5.53Z"
+                      fill="white"
+                      fill-rule="nonzero"
+                    />
+                  </svg>
+
+                  <span class="add-to-cart">Add to cart</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="empty-basket"></div>
+    </main>
+
+    <div class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+        >Frontend Mentor</a
+      >. Coded by <a href="#">Tinotenda Jecha</a>.
+    </div>
+
+    <script>
+      const images = document.querySelectorAll(".slide");
+      const openMenuBtn = document.getElementById("open-menu");
+      const closeMenuBtn = document.getElementById("close-menu");
+      const menu = document.getElementById("show-menu");
+      const previousBtn = document.getElementById("previous-btn");
+      const nextBtn = document.getElementById("next-btn");
+
+      const openMenu = () => {
+        menu.style.display = "block";
+      };
+
+      const closeMenu = () => {
+        menu.style.display = "none";
+        menu.style.transition = ".2s ease-out";
+      };
+
+      openMenuBtn.addEventListener("click", openMenu);
+      closeMenuBtn.addEventListener("click", closeMenu);
+
+      let index_to_display = 0;
+
+      for (i = 0; i < images.length; i++) {
+        images[i].style.display = "none";
+        images[index_to_display].style.display = "block";
+      }
+    </script>
+  </body>
+</html>
